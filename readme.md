@@ -8,37 +8,35 @@ Built on top of [React](https://facebook.github.io/react/), [Babel](https://babe
 Read the [introductory post](https://zeit.co/blog/next "Next.js introduction at zeit.co") or jump ahead to the [Getting Started](#getting-started) guide.
 
 [![Build Status](https://travis-ci.org/zeit/next.js.svg?branch=master)](https://travis-ci.org/zeit/next.js)
-[![Build status](https://ci.appveyor.com/api/projects/status/gqp5hs71l3ebtx1r/branch/master?svg=true)](https://ci.appveyor.com/project/arunoda/next-js/branch/master)
 [![Coverage Status](https://coveralls.io/repos/zeit/next.js/badge.svg?branch=master)](https://coveralls.io/r/zeit/next.js?branch=master)
 [![Slack Channel](https://zeit-slackin.now.sh/badge.svg)](https://zeit.chat)
 
-Next.js is a minimalistic framework for server-rendered React applications.
+:warning: **[`readme.md`](https://github.com/zeit/next.js/blob/master/readme.md) on the `master` branch might not match that of the [latest stable release](https://github.com/zeit/next.js/releases/latest).**
 
-**Visit https://learnnextjs.com to get started with Next.js.**
+## Getting Started
 
----
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-<!-- https://github.com/thlorenz/doctoc -->
-
-:construction: t.b.d. :construction:
-      - [Shallow Routing](#shallow-routing)
-  - [CDN support with Asset Prefix](#cdn-support-with-asset-prefix)
-- [Recipes](#recipes)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-## How to use
-
-### Setup
-
-Install it:
+For starters, make sure to create a directory and `package.json` inside to begin working from.
 
 ```bash
-npm install next react react-dom --save
+mkdir next-project && cd next-project
+npm init -y
 ```
 
-and add a script to your package.json like this:
+Hereafter it takes __three simple steps__ to set up your app.
+
+### Install the `next` package
+
+First up, install Next.js via [npm](https://npmjs.com/package/next):
+
+```bash
+npm install next --save
+```
+
+:information_source: Make sure you are running  at least the current [Node.js LTS](https://nodejs.org/en/download/) version.
+
+### Setup `npm` Scripts
+
+Next, add a few scripts to your `package.json` which will give you some easy commands to _develop, build_ and _start_ your app.
 
 ```json
 {
@@ -50,26 +48,30 @@ and add a script to your package.json like this:
 }
 ```
 
-After that, the file-system is the main API. Every `.js` file becomes a route that gets automatically processed and rendered.
+### Add a Page
 
-Populate `./pages/index.js` inside your project:
+By default Next.js maps routes to the file system. It looks for React components inside a `pages` directory, with the home page being `index.js`. Just create this file and populate it as follows:
 
 ```jsx
+// pages/index.js
 export default () => (
-  <div>Welcome to next.js!</div>
+  <div>Welcome to Next.js!</div>
 )
 ```
 
-and then just run `npm run dev` and go to `http://localhost:3000`. To use another port, you can run `npm run dev -- -p <your port here>`.
+Finally run `npm run dev` and open `http://localhost:3000`.
 
-So far, we get:
+For a production ready build run `npm run build` and serve it via `npm start`. :boom:
 
-- Automatic transpilation and bundling (with webpack and babel)
-- Hot code reloading
-- Server rendering and indexing of `./pages`
-- Static file serving. `./static/` is mapped to `/static/`
+> So far, we get:
+>
+> - Automatic transpilation and bundling (with [Babel](https://babeljs.io/) and [webpack](https://webpack.js.org/))
+> - Hot code reloading
+> - Server rendering and indexing of `./pages/`
 
-To see how simple this is, check out the [sample app - nextgram](https://github.com/zeit/nextgram)
+To see how simple it is, check out the [sample app - Nextgram](https://github.com/zeit/nextgram).
+
+## How to use
 
 ### Automatic code splitting
 
@@ -111,16 +113,9 @@ export default () => (
         }
       }
     `}</style>
-    <style global jsx>{`
-      body {
-        background: black;
-      }
-    `}</style>
   </div>
 )
 ```
-
-Please see the [styled-jsx documentation](https://github.com/zeit/styled-jsx) for more examples.
 
 #### CSS-in-JS
 
@@ -128,7 +123,7 @@ Please see the [styled-jsx documentation](https://github.com/zeit/styled-jsx) fo
   <summary>
     <b>Examples</b>
     </summary>
-  <ul><li><a href="./examples/with-styled-components">Styled components</a></li><li><a href="./examples/with-styletron">Styletron</a></li><li><a href="./examples/with-glamor">Glamor</a></li><li><a href="./examples/with-glamorous">Glamorous</a></li><li><a href="./examples/with-cxs">Cxs</a></li><li><a href="./examples/with-aphrodite">Aphrodite</a></li><li><a href="./examples/with-fela">Fela</a></li></ul>
+  <ul><li><a href="./examples/with-styled-components">Styled components</a></li><li><a href="./examples/with-styletron">Styletron</a></li><li><a href="./examples/with-glamor">Glamor</a></li><li><a href="./examples/with-cxs">Cxs</a></li><li><a href="./examples/with-aphrodite">Aphrodite</a></li><li><a href="./examples/with-fela">Fela</a></li></ul>
 </details></p>
 
 It's possible to use any existing CSS-in-JS solution. The simplest one is inline styles:
@@ -209,28 +204,13 @@ For the initial page load, `getInitialProps` will execute on the server only. `g
 
 _Note: `getInitialProps` can **not** be used in children components. Only in `pages`._
 
-You can also define the `getInitialProps` lifecycle method for stateless components:
-
-```jsx
-const Page = ({ stars }) => <div>Next stars: {stars}</div>
-
-Page.getInitialProps = async ({ req }) => {
-  const res = await fetch('https://api.github.com/repos/zeit/next.js')
-  const json = await res.json()
-  return { stars: json.stargazers_count }
-}
-
-export default Page
-```
-
 `getInitialProps` receives a context object with the following properties:
 
 - `pathname` - path section of URL
 - `query` - query string section of URL parsed as an object
-- `asPath` - the actual url path
 - `req` - HTTP request object (server only)
 - `res` - HTTP response object (server only)
-- `jsonPageRes` - [Fetch Response](https://developer.mozilla.org/en-US/docs/Web/API/Response) object (client only)
+- `xhr` - XMLHttpRequest object (client only)
 - `err` - Error object if any error is encountered during the rendering
 
 ### Routing
@@ -273,42 +253,10 @@ Each top-level component receives a `url` property with the following API:
 
 - `pathname` - `String` of the current path excluding the query string
 - `query` - `Object` with the parsed query string. Defaults to `{}`
-- `asPath` - `String` of the actual path (including the query) shows in the browser
 - `push(url, as=url)` - performs a `pushState` call with the given url
 - `replace(url, as=url)` - performs a `replaceState` call with the given url
 
 The second `as` parameter for `push` and `replace` is an optional _decoration_ of the URL. Useful if you configured custom routes on the server.
-
-##### With URL object
-
-<p><details>
-  <summary><b>Examples</b></summary>
-  <ul>
-    <li><a href="./examples/with-url-object-routing">With URL Object Routing</a></li>
-  </ul>
-</details></p>
-
-The component `<Link>` can also receive an URL object and it will automatically format it to create the URL string.
-
-```jsx
-// pages/index.js
-import Link from 'next/link'
-export default () => (
-  <div>Click <Link href={{ pathname: 'about', query: { name: 'Zeit' }}}><a>here</a></Link> to read more</div>
-)
-```
-
-That will generate the URL string `/about?name=Zeit`, you can use every property as defined in the [Node.js URL module documentation](https://nodejs.org/api/url.html#url_url_strings_and_url_objects).
-
-The default behaviour for the `<Link>` component is to `push` a new url into the stack. You can use the `replace` prop to prevent adding a new entry.
-
-```jsx
-// pages/index.js
-import Link from 'next/link'
-export default () => (
-  <div>Click <Link href='/about' replace><a>here</a></Link> to read more</div>
-)
-```
 
 #### Imperatively
 
@@ -342,24 +290,6 @@ The second `as` parameter for `push` and `replace` is an optional _decoration_ o
 
 _Note: in order to programmatically change the route without triggering navigation and component-fetching, use `props.url.push` and `props.url.replace` within a component_
 
-##### With URL object
-You can use an URL object the same way you use it in a `<Link>` component to `push` and `replace` an url.
-
-```jsx
-import Router from 'next/router'
-
-const handler = () => Router.push({
-  pathname: 'about',
-  query: { name: 'Zeit' }
-})
-
-export default () => (
-  <div>Click <span onClick={handler}>here</span> to read more</div>
-)
-```
-
-This uses of the same exact parameters as in the `<Link>` component.
-
 ##### Router Events
 
 You can also listen to different events happening inside the Router.
@@ -368,7 +298,6 @@ Here's a list of supported events:
 - `routeChangeStart(url)` - Fires when a route starts to change
 - `routeChangeComplete(url)` - Fires when a route changed completely
 - `routeChangeError(err, url)` - Fires when there's an error when changing routes
-- `beforeHistoryChange(url)` - Fires just before changing the browser's history
 - `appUpdated(nextRoute)` - Fires when switching pages and there's a new version of the app
 
 > Here `url` is the URL shown in the browser. If you call `Router.push(url, as)` (or similar), then the value of `url` will be `as`.
@@ -408,48 +337,7 @@ Router.onAppUpdated = (nextUrl) => {
 }
 ```
 
-##### Shallow Routing
-
-<p><details>
-  <summary><b>Examples</b></summary>
-  <ul>
-    <li><a href="./examples/with-shallow-routing">Shallow Routing</a></li>
-  </ul>
-</details></p>
-
-Shallow routing allows you to change the URL without running `getInitialProps`. You'll receive the updated `pathname` and the `query` via the `url` prop of the same page that's loaded, without losing state.
-
-You can do this by invoking either `Router.push` or `Router.replace` with the `shallow: true` option. Here's an example:
-
-```jsx
-// Current URL is "/"
-const href = '/?counter=10'
-const as = href
-Router.push(href, as, { shallow: true })
-```
-
-Now, the URL is updated to `/?counter=10`. You can see the updated URL with `this.props.url` inside the `Component`.
-
-You can watch for URL changes via [`componentWillReceiveProps`](https://facebook.github.io/react/docs/react-component.html#componentwillreceiveprops) hook as shown below:
-
-```jsx
-componentWillReceiveProps(nextProps) {
-  const { pathname, query } = nextProps.url
-  // fetch data based on the new query
-}
-```
-
-> NOTES:
->
-> Shallow routing works **only** for same page URL changes. For an example, let's assume we've another page called `about`, and you run this:
-> ```js
-> Router.push('/about?counter=10', '/about?counter=10', { shallow: true })
-> ```
-> Since that's a new page, it'll unload the current page, load the new one and call `getInitialProps` even though we asked to do shallow routing.
-
 ### Prefetching Pages
-
-(This is a production only feature)
 
 <p><details>
   <summary><b>Examples</b></summary>
@@ -529,8 +417,6 @@ const handle = app.getRequestHandler()
 
 app.prepare().then(() => {
   createServer((req, res) => {
-    // Be sure to pass `true` as the second argument to `url.parse`.
-    // This tells it to parse the query portion of the URL.
     const parsedUrl = parse(req.url, true)
     const { pathname, query } = parsedUrl
 
@@ -550,14 +436,13 @@ app.prepare().then(() => {
 ```
 
 The `next` API is as follows:
-- `next(path: string, opts: object)` - `path` is where the Next project is located
+- `next(path: string, opts: object)` - `path` is
 - `next(opts: object)`
 
 Supported options:
 - `dev` (`bool`) whether to launch Next.js in dev mode - default `false`
 - `dir` (`string`) where the Next project is located - default `'.'`
 - `quiet` (`bool`) Hide error messages containing server information - default `false`
-- `conf` (`object`) the same object you would use in `next.config.js` - default `{}`
 
 Then, change your `start` script to `NODE_ENV=production node server.js`.
 
@@ -574,13 +459,11 @@ Pages in `Next.js` skip the definition of the surrounding document's markup. For
 ```jsx
 // ./pages/_document.js
 import Document, { Head, Main, NextScript } from 'next/document'
-import flush from 'styled-jsx/server'
 
 export default class MyDocument extends Document {
-  static getInitialProps ({ renderPage }) {
-    const {html, head} = renderPage()
-    const styles = flush()
-    return { html, head, styles }
+  static async getInitialProps (ctx) {
+    const props = await Document.getInitialProps(ctx)
+    return { ...props, customValue: 'hi there!' }
   }
 
   render () {
@@ -604,8 +487,6 @@ The `ctx` object is equivalent to the one received in all [`getInitialProps`](#f
 
 - `renderPage` (`Function`) a callback that executes the actual React rendering logic (synchronously). It's useful to decorate this function in order to support server-rendering wrappers like Aphrodite's [`renderStatic`](https://github.com/Khan/aphrodite#server-side-rendering)
 
-__Note: React-components outside of `<Main />` will not be initialised by the browser. If you need shared components in all your pages (like a menu or a toolbar), do _not_ add application logic  here, but take a look at [this example](https://github.com/zeit/next.js/tree/master/examples/layout-component).__
-
 ### Custom error handling
 
 404 or 500 errors are handled both client and server side by a default component `error.js`. If you wish to override it, define a `_error.js`:
@@ -613,8 +494,8 @@ __Note: React-components outside of `<Main />` will not be initialised by the br
 ```jsx
 import React from 'react'
 export default class Error extends React.Component {
-  static getInitialProps ({ res, jsonPageRes }) {
-    const statusCode = res ? res.statusCode : (jsonPageRes ? jsonPageRes.status : null)
+  static getInitialProps ({ res, xhr }) {
+    const statusCode = res ? res.statusCode : (xhr ? xhr.status : null)
     return { statusCode }
   }
 
@@ -643,23 +524,7 @@ module.exports = {
 }
 ```
 
-#### Setting a custom build directory
-
-You can specify a name to use for a custom build directory. For example, the following config will create a `build` folder instead of a `.next` folder. If no configuration is specified then next will create a `.next` folder.
-
-```javascript
-// next.config.js
-module.exports = {
-  distDir: 'build'
-}
-```
-
 ### Customizing webpack config
-
-<p><details>
-  <summary><b>Examples</b></summary>
-  <ul><li><a href="./examples/with-webpack-bundle-analyzer">Custom webpack bundle analyzer</a></li></ul>
-</details></p>
 
 In order to extend our usage of `webpack`, you can define a function that extends its config via `next.config.js`.
 
@@ -670,15 +535,9 @@ In order to extend our usage of `webpack`, you can define a function that extend
 
 module.exports = {
   webpack: (config, { dev }) => {
-    // Perform customizations to webpack config
-
-    // Important: return the modified config
-    return config
-  },
-  webpackDevMiddleware: (config) => {
-    // Perform customizations to webpack dev middleware config
-
-    // Important: return the modified config
+    // Perform customizations to config
+    
+    // Important: return the modified config
     return config
   }
 }
@@ -710,23 +569,9 @@ Here's an example `.babelrc` file:
 }
 ```
 
-### CDN support with Asset Prefix
-
-To set up a CDN, you can set up the `assetPrefix` setting and configure your CDN's origin to resolve to the domain that Next.js is hosted on.
-
-```js
-const isProd = process.env.NODE_ENV === 'production'
-module.exports = {
-  // You may only need to add assetPrefix in the production.
-  assetPrefix: isProd ? 'https://cdn.mydomain.com' : ''
-}
-```
-
-Note: Next.js will automatically use that prefix the scripts it loads, but this has no effect whatsoever on `/static`. If you want to serve those assets over the CDN, you'll have to introduce the prefix yourself. One way of introducing a prefix that works inside your components and varies by environment is documented [in this example](https://github.com/zeit/next.js/tree/master/examples/with-universal-configuration).
-
 ## Production deployment
 
-To deploy, instead of running `next`, you want to build for production usage ahead of time. Therefore, building and starting are separate commands:
+To deploy, instead of running `next`, you probably want to build ahead of time. Therefore, building and starting are separate commands:
 
 ```bash
 next build
@@ -751,19 +596,13 @@ For example, to deploy with [`now`](https://zeit.co/now) a `package.json` like f
 
 Then run `now` and enjoy!
 
-Next.js can be deployed to other hosting solutions too. Please have a look at the ['Deployment'](https://github.com/zeit/next.js/wiki/Deployment) section of the wiki.
-
-Note: we recommend putting `.next`, or your custom dist folder (you can set a custom folder in ['Custom Config'](https://github.com/zeit/next.js#custom-configuration)), in `.npmignore` or `.gitignore`. Otherwise, use `files` or `now.files` to opt-into a whitelist of files you want to deploy (and obviously exclude `.next` or your custom dist folder)
-
-## Recipes
-
-- [Setting up 301 redirects](https://www.raygesualdo.com/posts/301-redirects-with-nextjs/)
+Note: we recommend putting `.next` in `.npmignore` or `.gitignore`. Otherwise, use `files` or `now.files` to opt-into a whitelist of files you want to deploy (and obviously exclude `.next`)
 
 ## FAQ
 
 <details>
   <summary>Is this production ready?</summary>
-  Next.js has been powering https://zeit.co since its inception.
+  Next.js has been powering `https://zeit.co` since its inception.
 
   We’re ecstatic about both the developer experience and end-user performance, so we decided to share it with the community.
 </details>
@@ -867,6 +706,10 @@ Unlike PHP, we benefit from the ES6 module system and every file exports a **com
 As we were researching options for server-rendering React that didn’t involve a large number of steps, we came across [react-page](https://github.com/facebookarchive/react-page) (now deprecated), a similar approach to Next.js by the creator of React Jordan Walke.
 
 </details>
+
+## Roadmap
+
+Our Roadmap towards 2.0.0 [is public](https://github.com/zeit/next.js/wiki/Roadmap#nextjs-200).
 
 ## Contributing
 
