@@ -1,5 +1,12 @@
 # <img width="112" alt="Next.js" src="https://cloud.githubusercontent.com/assets/13041/19686250/971bf7f8-9ac0-11e6-975c-188defd82df1.png">
 
+> A complete framework for Universal JavaScript applications with zero setup.
+
+Next.js helps you write high performing web apps that render in the browser and on the server.
+Built on top of [React](https://facebook.github.io/react/), [Babel](https://babeljs.io/) and [webpack](https://webpack.js.org/), it provides essential tools to develop, compile and serve your code without getting in the way once it's time to customize functionality.
+
+Read the [introductory post](https://zeit.co/blog/next "Next.js introduction at zeit.co") or jump ahead to the [Getting Started](#getting-started) guide.
+
 [![Build Status](https://travis-ci.org/zeit/next.js.svg?branch=master)](https://travis-ci.org/zeit/next.js)
 [![Build status](https://ci.appveyor.com/api/projects/status/gqp5hs71l3ebtx1r/branch/master?svg=true)](https://ci.appveyor.com/project/arunoda/next-js/branch/master)
 [![Coverage Status](https://coveralls.io/repos/zeit/next.js/badge.svg?branch=master)](https://coveralls.io/r/zeit/next.js?branch=master)
@@ -10,7 +17,6 @@ Next.js is a minimalistic framework for server-rendered React applications.
 **Visit https://learnnextjs.com to get started with Next.js.**
 
 ---
-
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 <!-- https://github.com/thlorenz/doctoc -->
