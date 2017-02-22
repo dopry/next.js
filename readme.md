@@ -21,35 +21,10 @@ Next.js is a minimalistic framework for server-rendered React applications.
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 <!-- https://github.com/thlorenz/doctoc -->
 
-- [How to use](#how-to-use)
-  - [Setup](#setup)
-  - [Automatic code splitting](#automatic-code-splitting)
-  - [CSS](#css)
-    - [Built-in CSS support](#built-in-css-support)
-    - [CSS-in-JS](#css-in-js)
-  - [Static file serving (e.g.: images)](#static-file-serving-eg-images)
-  - [Populating `<head>`](#populating-head)
-  - [Fetching data and component lifecycle](#fetching-data-and-component-lifecycle)
-  - [Routing](#routing)
-    - [With `<Link>`](#with-link)
-    - [Imperatively](#imperatively)
-      - [Router Events](#router-events)
+:construction: t.b.d. :construction:
       - [Shallow Routing](#shallow-routing)
-  - [Prefetching Pages](#prefetching-pages)
-    - [With `<Link>`](#with-link-1)
-    - [Imperatively](#imperatively-1)
-  - [Custom server and routing](#custom-server-and-routing)
-  - [Custom `<Document>`](#custom-document)
-  - [Custom error handling](#custom-error-handling)
-  - [Custom configuration](#custom-configuration)
-  - [Customizing webpack config](#customizing-webpack-config)
-  - [Customizing babel config](#customizing-babel-config)
   - [CDN support with Asset Prefix](#cdn-support-with-asset-prefix)
-- [Production deployment](#production-deployment)
 - [Recipes](#recipes)
-- [FAQ](#faq)
-- [Contributing](#contributing)
-- [Authors](#authors)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
